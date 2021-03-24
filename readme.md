@@ -5,7 +5,7 @@
 ## Development setup
 
 > Inside each folder simply run html code in any browser
-> in the termial with PWD as current folder run
+> and then in the termial with PWD as current folder run
 
 ```
 npx tsc -w main.ts

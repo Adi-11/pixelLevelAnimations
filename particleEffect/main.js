@@ -7,7 +7,7 @@ var particleArray = [];
 var mouse = {
     x: null || 0,
     y: null || 0,
-    radius: 100
+    radius: 150
 };
 window.addEventListener("mousemove", function (event) {
     mouse.x = event.x;
@@ -15,11 +15,11 @@ window.addEventListener("mousemove", function (event) {
     //   console.log(mouse);
 });
 ctx.fillStyle = "white";
-ctx.font = "30px Roboto";
+ctx.font = "40px Roboto";
 ctx.fillText("Aditya", 0, 40);
 ctx.strokeStyle = "white";
-ctx.strokeRect(0, 0, 100, 100);
-var textPixelData = ctx.getImageData(0, 0, 100, 100);
+ctx.strokeRect(0, 0, 200, 200);
+var textPixelData = ctx.getImageData(0, 0, 200, 200);
 var Particle = /** @class */ (function () {
     function Particle(x, y) {
         this.x = x + 100;
@@ -27,12 +27,12 @@ var Particle = /** @class */ (function () {
         this.size = 3;
         this.baseX = this.x;
         this.baseY = this.y;
-        this.density = Math.random() * 0.005 + 1;
+        this.density = Math.random() * 0.05 + 1;
     }
     Particle.prototype.draw = function () {
         ctx.fillStyle = "white";
         ctx.beginPath();
-        ctx.arc(this.x + 10, this.y, this.size, 0, Math.PI * 2);
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
         ctx.closePath();
         ctx.fill();
     };
@@ -48,8 +48,8 @@ var Particle = /** @class */ (function () {
         var directionY = forceDirectionY * force * this.density;
         if (distance < mouse.radius) {
             //   this.size = 15;
-            this.x += directionX;
-            this.y -= directionY;
+            this.x -= directionX;
+            this.y += directionY;
         }
         else {
             //   this.size = 3;
@@ -79,12 +79,15 @@ var init = function () {
 };
 init();
 var connect = function () {
+    var opacity = 1;
     for (var a = 0; a < particleArray.length; a++) {
         for (var b = a; b < particleArray.length; b++) {
             var dx = particleArray[a].x - particleArray[b].x;
             var dy = particleArray[a].y - particleArray[b].y;
             var distance = Math.sqrt(dx * dx + dy * dy);
-            if (distance < 20) {
+            // opacity = 1 - distance / 30;
+            // ctx.strokeStyle = "rgba(255, 255, 255," + opacity + ")";
+            if (distance < 30) {
                 ctx.strokeStyle = "red";
                 ctx.lineWidth = 1;
                 ctx.beginPath();
